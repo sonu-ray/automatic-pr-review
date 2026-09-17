@@ -34,7 +34,13 @@ jobs:
         run: |
           echo "📄 PR diff saved to pr.diff"
           echo "📏 Diff size:"
-          wc -c pr.diff
+          wc -c pr.
+
+      - name: Read PR diff
+        run: |
+          echo "📖 Contents of pr.diff:"
+          cat pr.diff
+
 
       - name: Complete
         run: |
