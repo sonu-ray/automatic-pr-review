@@ -5,4 +5,5 @@ Tesing the updated workflow.
     3. Updated workflow to  Understand what we're actually receiving
     4. Enhance PR review workflow to read diff contents
     5. Added GitHub Actions' explicit workspace path 
-        Tesing
+    6. Testing GitHub API - Listing all files
+    7. Saving GitHub API Json Response
