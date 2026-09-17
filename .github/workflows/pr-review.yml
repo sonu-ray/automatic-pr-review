@@ -20,3 +20,16 @@ jobs:
           echo "PR Number: ${{ github.event.pull_request.number }}"
           echo "PR Title: ${{ github.event.pull_request.title }}"
           echo "PR Author: ${{ github.event.pull_request.user.login }}"
+
+      - name: Get PR diff
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "📄 Getting PR diff..."
+
+          gh pr diff ${{ github.event.pull_request.number }} \
+            --repo ${{ github.repository }}
+
+      - name: Complete
+        run: |
+          echo "✅ PR diff retrieved successfully"
