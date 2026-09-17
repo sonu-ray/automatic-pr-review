@@ -5,4 +5,4 @@ Tesing the updated workflow.
     3. Updated workflow to  Understand what we're actually receiving
     4. Enhance PR review workflow to read diff contents
     5. Added GitHub Actions' explicit workspace path
-        Testing
+        Testing Checkout
