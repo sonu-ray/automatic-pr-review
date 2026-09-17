@@ -66,6 +66,21 @@ jobs:
           echo "📖 Contents of pr-files.json:"
           cat "$GITHUB_WORKSPACE/pr-files.json"
 
+      - name: Parse changed files
+        run: |
+          echo "🔍 Parsing changed files..."
+
+          jq -r '.[] |
+            "----------------------------------------",
+            "File: \(.filename)",
+            "Status: \(.status)",
+            "Additions: \(.additions)",
+            "Deletions: \(.deletions)",
+            "Changes: \(.changes)",
+            "Patch:",
+            (.patch // "No patch available")' \
+            "$GITHUB_WORKSPACE/pr-files.json"
+
       - name: Complete
         run: |
-          echo "✅ PR diff and changed files retrieved successfully"
+          echo "✅ PR information processed successfully"
