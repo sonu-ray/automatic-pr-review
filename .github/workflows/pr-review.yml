@@ -47,6 +47,11 @@ jobs:
           echo "📖 Contents of pr.diff:"
           cat "$GITHUB_WORKSPACE/pr.diff"
 
+      - name: List changed files
+        run: |
+          echo "📂 Files changed in this PR:"
+          git diff --name-only HEAD^ HEAD
+          
       - name: Complete
         run: |
           echo "✅ PR diff retrieved successfully"
