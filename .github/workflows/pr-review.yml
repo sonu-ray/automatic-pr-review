@@ -51,21 +51,21 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          echo "📂 Changed files details:"
+          echo "📂 Getting changed files from GitHub API..."
 
           gh api \
             repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files \
             --paginate \
-            --jq '.[] |
-              "----------------------------------------",
-              "File: \(.filename)",
-              "Status: \(.status)",
-              "Additions: \(.additions)",
-              "Deletions: \(.deletions)",
-              "Changes: \(.changes)",
-              "Patch:",
-              (.patch // "No patch available")'
+            > "$GITHUB_WORKSPACE/pr-files.json"
+
+          echo "✅ Changed files response saved"
+          ls -lh "$GITHUB_WORKSPACE/pr-files.json"
+
+      - name: Read changed files JSON
+        run: |
+          echo "📖 Contents of pr-files.json:"
+          cat "$GITHUB_WORKSPACE/pr-files.json"
 
       - name: Complete
         run: |
-          echo "✅ PR diff retrieved successfully"
+          echo "✅ PR diff and changed files retrieved successfully"
