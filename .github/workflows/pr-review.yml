@@ -28,19 +28,21 @@ jobs:
           echo "📄 Getting PR diff..."
 
           gh pr diff ${{ github.event.pull_request.number }} \
-            --repo ${{ github.repository }} > pr.diff
+            --repo ${{ github.repository }} > "$GITHUB_WORKSPACE/pr.diff"
+
+          echo "✅ Diff file created"
+          ls -lh "$GITHUB_WORKSPACE/pr.diff"
 
       - name: Show diff file
         run: |
           echo "📄 PR diff saved to pr.diff"
           echo "📏 Diff size:"
-          wc -c pr.
+          wc -c "$GITHUB_WORKSPACE/pr.diff"
 
       - name: Read PR diff
         run: |
           echo "📖 Contents of pr.diff:"
-          cat pr.diff
-
+          cat "$GITHUB_WORKSPACE/pr.diff"
 
       - name: Complete
         run: |
