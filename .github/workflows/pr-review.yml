@@ -47,16 +47,24 @@ jobs:
           echo "📖 Contents of pr.diff:"
           cat "$GITHUB_WORKSPACE/pr.diff"
 
-      - name: List changed files
+      - name: Get changed files details
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          echo "📂 Files changed in this PR:"
+          echo "📂 Changed files details:"
 
           gh api \
             repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files \
             --paginate \
-            --jq '.[].filename'
+            --jq '.[] |
+              "----------------------------------------",
+              "File: \(.filename)",
+              "Status: \(.status)",
+              "Additions: \(.additions)",
+              "Deletions: \(.deletions)",
+              "Changes: \(.changes)",
+              "Patch:",
+              (.patch // "No patch available")'
 
       - name: Complete
         run: |
