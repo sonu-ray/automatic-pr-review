@@ -48,10 +48,16 @@ jobs:
           cat "$GITHUB_WORKSPACE/pr.diff"
 
       - name: List changed files
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           echo "📂 Files changed in this PR:"
-          git diff --name-only HEAD^ HEAD
-          
+
+          gh api \
+            repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files \
+            --paginate \
+            --jq '.[].filename'
+
       - name: Complete
         run: |
           echo "✅ PR diff retrieved successfully"
